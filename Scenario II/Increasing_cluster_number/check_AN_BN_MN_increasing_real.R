@@ -146,6 +146,7 @@ check.AN = function(M = 10, # Simulation size
   
   Beta.emp.BN = rowMeans(as.data.frame(Beta_est.BN))
   Beta.emp.MN = rowMeans(as.data.frame(Beta_est.MN))
+  sd.emp.MN = apply(as.data.frame(Beta_est.MN), 1, sd)
   
   
   return(list( 
@@ -157,6 +158,7 @@ check.AN = function(M = 10, # Simulation size
     
     ### MN ###
     MN.p_k.est = MN.p_k.est,
-    Beta.emp.MN = Beta.emp.MN
+    Beta.emp.MN = Beta.emp.MN,
+    sd.emp.MN = sd.emp.MN
   ))
 }

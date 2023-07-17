@@ -31,9 +31,8 @@ check.AN = function(M = 10, # Simulation size
                       size1 = size1,
                       size2 = size2,
                       midsize = midsize) 
-    ind = which(SN1$x_prop %in% c(0.45,0.5,0.55))
-    ind_0 = ind[which(SN1$x_his[ind] == 0)]
-    ind_exclude = sample(ind_0, floor(0.5*length(ind_0)))
+    ind = which(SN1$x_his == 0)
+    ind_exclude = sample(ind, floor(0.5*length(ind)))
     ind_sample = (1:length(SN1$x_prop))[-ind_exclude]
     
     x1_jt_minus_x_new = SN1$x1_jt_minus_x_new[ind_sample]
@@ -166,6 +165,7 @@ check.AN = function(M = 10, # Simulation size
   
   Beta.emp.BN = rowMeans(as.data.frame(Beta_est.BN))
   Beta.emp.MN = rowMeans(as.data.frame(Beta_est.MN))
+  sd.emp.MN = apply(as.data.frame(Beta_est.MN), 1, sd)
   
   
   return(list( 
@@ -174,21 +174,11 @@ check.AN = function(M = 10, # Simulation size
     Rho_k.est.mean = Rho_k.est.mean, # BN for each column
     BN.p_k.est = BN.p_k.est,         # BN for ALL
     Beta.emp.BN = Beta.emp.BN,
-    #Var.asy.BN = rowMeans(as.data.frame(Var_est.BN)),
-    #Var.emp.BN = rowMeans((as.data.frame(Beta_est.BN) - Beta.emp.BN) ^
-    #2),
     
     
     ### MN ###
     MN.p_k.est = MN.p_k.est,
-    Beta.emp.MN = Beta.emp.MN
-    #Var.asy.MN = rowMeans(as.data.frame(Var_est.MN)),
-    #Var.emp.MN = rowMeans((as.data.frame(Beta_est.MN) - Beta.emp.MN)^2),
-    
-    # Beta0.alpha.MN = mean(Beta0_chisq.MN > qchisq(.95, nrow(Beta0_matrix))),
-    # Beta1.alpha.MN = mean(Beta1_chisq.MN > qchisq(.95, nrow(Beta1_matrix))),
-    # 
-    # Beta0_chisq.MN = Beta0_chisq.MN,
-    # Beta1_chisq.MN = Beta1_chisq.MN
+    Beta.emp.MN = Beta.emp.MN,
+    sd.emp.MN = sd.emp.MN
   ))
 }
